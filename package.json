@@ -12,7 +12,9 @@
     "express": "^4.21.1",
     "firebase": "^11.0.1",
     "mysql2": "^3.11.3",
-    "sequelize": "^6.37.5",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
     "sequelize-cli": "^6.6.2"
   }
 }
