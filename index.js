@@ -1,9 +1,13 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const db = require("./src/models/index.js");
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  db.sequelize.authenticate().then(() => {
+    res.send("Hello World!");
+    console.log("database connected");
+  });
 });
 
 app.listen(port, () => {
