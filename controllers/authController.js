@@ -32,3 +32,5 @@ async function authenticateUser(req, res) {
     });
   }
 }
+
+exports.authenticateUser = authenticateUser;
