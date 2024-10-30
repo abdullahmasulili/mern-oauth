@@ -11,6 +11,10 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER,
+        references: {
+          key: "id",
+          model: "Users",
+        },
       },
       login_timestamp: {
         type: Sequelize.DATE,
