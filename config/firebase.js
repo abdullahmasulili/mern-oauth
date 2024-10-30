@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const firebase = require("firebase/app");
 
 const firebaseConfig = {
@@ -10,4 +12,4 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
-export const app = firebase.initializeApp(firebaseConfig);
+module.exports = firebase.initializeApp(firebaseConfig);
