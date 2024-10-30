@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      firebaseUID: DataTypes.STRING,
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
+      firebase_uid: DataTypes.STRING,
+      first_name: DataTypes.STRING,
+      last_name: DataTypes.STRING,
       email: DataTypes.STRING,
       sign_up_timestamp: DataTypes.DATE,
     },
