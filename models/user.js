@@ -27,10 +27,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
+      firebaseUID: DataTypes.STRING,
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
       email: DataTypes.STRING,
-      password_hash: DataTypes.STRING,
       sign_up_timestamp: DataTypes.DATE,
     },
     {
