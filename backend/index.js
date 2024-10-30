@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const { checkDatabaseConnection } = require("./config/database.js");
 
-app.use("/api", auth);
+const { checkDatabaseConnection } = require("./config/database.js");
+const authRoute = require("./routes/auth.js");
+
+app.use("/api", authRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
