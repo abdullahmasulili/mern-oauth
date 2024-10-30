@@ -33,4 +33,4 @@ async function authenticateUser(req, res) {
   }
 }
 
-exports.authenticateUser = authenticateUser;
+module.exports = authenticateUser;
