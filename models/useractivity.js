@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      UserActivity.belongsTo(models.User, {
+        as: "user",
+        foreignKey: { name: "user_id", type: DataTypes.INTEGER },
+      });
     }
   }
   UserActivity.init(
@@ -20,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "UserActivity",
+      tableName: "user_activities",
     }
   );
   return UserActivity;
