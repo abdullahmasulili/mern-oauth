@@ -2,10 +2,12 @@ const admin = require("../config/firebase");
 const User = require("../models/user");
 
 async function authenticateUser(req, res) {
-  const { firebaseToken, firstName, lastName } = req.body;
+  const payload = req.body;
 
   try {
-    const decodedToken = await admin.auth().verifyIdToken(firebaseToken);
+    const decodedToken = await admin
+      .auth()
+      .verifyIdToken(payload.firebaseToken);
     const { uid, email } = decodedToken;
 
     const user = await User.findOne({ where: { firebase_uid: uid } });
@@ -13,8 +15,8 @@ async function authenticateUser(req, res) {
     if (!user) {
       const newUser = {
         firebase_uid: uid,
-        first_name: firstName,
-        last_name: lastName,
+        first_name: payload.firstName,
+        last_name: payload.lastName,
         email,
         sign_up_timestamp: new Date(),
       };
