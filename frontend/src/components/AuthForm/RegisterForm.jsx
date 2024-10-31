@@ -121,7 +121,11 @@ export default function RegisterForm({ onSwitchLogin }) {
           >
             Continue with Facebook
           </Button>
-          <Button variant="text" onClick={() => onSwitchLogin("login")}>
+          <Button
+            type="button"
+            variant="text"
+            onClick={() => onSwitchLogin("login")}
+          >
             Already Have An Account?
           </Button>
         </CardContent>

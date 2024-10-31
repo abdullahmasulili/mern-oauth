@@ -84,7 +84,11 @@ export default function AuthForm({ onSwitchRegister }) {
           >
             Continue with Facebook
           </Button>
-          <Button variant="text" onClick={() => onSwitchRegister("register")}>
+          <Button
+            type="button"
+            variant="text"
+            onClick={() => onSwitchRegister("register")}
+          >
             Don&apos;t Have An Account?
           </Button>
         </CardContent>
