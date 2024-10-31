@@ -15,14 +15,12 @@ import { useFormik } from "formik";
 
 import classes from "./styles.module.css";
 
-import { loginSchema as validationSchema } from "../../util/Validations";
-
 const initialValues = {
   email: "",
   password: "",
 };
 
-export default function AuthForm({ onSwitchRegister }) {
+export default function AuthForm({ onSwitchRegister, validationSchema }) {
   function onSubmitHandler(values) {
     console.log(values);
   }

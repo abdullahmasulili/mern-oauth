@@ -15,8 +15,6 @@ import { useFormik } from "formik";
 
 import classes from "./styles.module.css";
 
-import { registerSchema as validationSchema } from "../../util/Validations";
-
 const initialValues = {
   firstName: "",
   lastName: "",
@@ -25,7 +23,7 @@ const initialValues = {
   confirmPass: "",
 };
 
-export default function RegisterForm({ onSwitchLogin }) {
+export default function RegisterForm({ onSwitchLogin, validationSchema }) {
   function onSubmitHandler(values) {
     console.log(values);
   }

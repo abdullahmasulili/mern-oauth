@@ -1,7 +1,9 @@
 import { useSearchParams } from "react-router-dom";
-import LoginForm from "../../components/AuthForm/LoginForm";
 
 import classes from "./Auth.module.css";
+import { loginSchema, registerSchema } from "../../util/validations.js";
+
+import LoginForm from "../../components/AuthForm/LoginForm";
 import RegisterForm from "../../components/AuthForm/RegisterForm";
 
 export default function AuthPage() {
@@ -15,9 +17,15 @@ export default function AuthPage() {
   return (
     <main className={classes.container}>
       {isLogin ? (
-        <LoginForm onSwitchRegister={handleSwitchForm} />
+        <LoginForm
+          onSwitchRegister={handleSwitchForm}
+          validationSchema={loginSchema}
+        />
       ) : (
-        <RegisterForm onSwitchLogin={handleSwitchForm} />
+        <RegisterForm
+          onSwitchLogin={handleSwitchForm}
+          validationSchema={registerSchema}
+        />
       )}
     </main>
   );
