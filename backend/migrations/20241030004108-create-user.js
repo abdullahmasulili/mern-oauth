@@ -24,6 +24,7 @@ module.exports = {
       },
       email_is_verified: {
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       sign_up_timestamp: {
         type: Sequelize.DATE,
