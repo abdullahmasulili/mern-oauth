@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 
 import classes from "./Auth.module.css";
-import { loginSchema, registerSchema } from "../../util/validations.js";
+import { loginSchema, registerSchema } from "../../util/Validations.js";
 
 import LoginForm from "../../components/AuthForm/LoginForm";
 import RegisterForm from "../../components/AuthForm/RegisterForm";
