@@ -8,6 +8,8 @@ import {
 } from "firebase/auth";
 
 import { auth } from "./FirebaseConfig";
+import { AUTH_STATUS } from "./Constants";
+import { handleAuth } from "./Http";
 
 async function handleLoginWithEmailAndPassword(email, password) {
   const userCredential = await signInWithEmailAndPassword(
@@ -16,29 +18,19 @@ async function handleLoginWithEmailAndPassword(email, password) {
     password
   );
   const firebaseToken = await userCredential.user.getIdToken();
-  const response = await fetch("http://localhost:3000/api/auth", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ firebaseToken }),
-  });
+  const userData = await handleAuth({ firebaseToken });
 
-  if (!response.ok) {
-    throw new Error({ message: "Failed to authenticate user" });
-  }
-
-  const resData = await response.json();
+  userData.accessToken = firebaseToken;
 
   try {
     return Promise.resolve({
-      type: "AUTHORIZED",
+      type: AUTH_STATUS.AUTHORIZED,
       message: "Login Succeed",
-      data: resData,
+      data: userData,
     });
   } catch (err) {
     return Promise.reject({
-      type: "UNAUTHORIZED",
+      type: AUTH_STATUS.UNAUTHORIZED,
       message: err.message,
     });
   }
@@ -57,28 +49,18 @@ async function handleRegisterWithEmailAndPassword(
       password
     );
     const firebaseToken = await userCredential.user.getIdToken();
-    const response = await fetch("http://localhost:3000/api/auth", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ firebaseToken, firstName, lastName }),
-    });
+    const userData = await handleAuth({ firebaseToken, firstName, lastName });
 
-    if (!response.ok) {
-      throw new Error({ message: "Failed to register user" });
-    }
-
-    const resData = await response.json();
+    userData.accessToken = firebaseToken;
 
     return Promise.resolve({
-      type: "AUTHORIZED",
+      type: AUTH_STATUS.AUTHORIZED,
       message: "Register Succeed",
-      data: resData,
+      data: userData,
     });
   } catch (err) {
     return Promise.reject({
-      type: "UNAUTHORIZED",
+      type: AUTH_STATUS.UNAUTHORIZED,
       message: err.message,
     });
   }
@@ -90,30 +72,18 @@ async function handleGoogleSignUp() {
   try {
     const userCredential = await signInWithPopup(auth, provider);
     const firebaseToken = await userCredential.user.getIdToken();
-    const response = await fetch("http://localhost:3000/api/auth", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ firebaseToken }),
-    });
+    const userData = await handleAuth({ firebaseToken });
 
-    if (!response.ok) {
-      throw new Error({
-        message: "Failed to register user using google account",
-      });
-    }
-
-    const resData = await response.json();
+    userData.accessToken = firebaseToken;
 
     return Promise.resolve({
-      type: "AUTHORIZED",
+      type: AUTH_STATUS.AUTHORIZED,
       message: "Register with google succeed",
-      data: resData,
+      data: userData,
     });
   } catch (err) {
     return Promise.reject({
-      type: "UNAUTHORIZED",
+      type: AUTH_STATUS.UNAUTHORIZED,
       message: err.message,
     });
   }
@@ -125,30 +95,18 @@ async function handleFacebookSignUp() {
   try {
     const userCredential = await signInWithPopup(auth, provider);
     const firebaseToken = await userCredential.user.getIdToken();
-    const response = await fetch("http://localhost:3000/api/auth", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ firebaseToken }),
-    });
+    const userData = await handleAuth({ firebaseToken });
 
-    if (!response.ok) {
-      throw new Error({
-        message: "Failed to register user with facebook account",
-      });
-    }
-
-    const resData = await response.json();
+    userData.accessToken = firebaseToken;
 
     return Promise.resolve({
-      type: "AUTHORIZED",
+      type: AUTH_STATUS.AUTHORIZED,
       message: "Register with facebook succeed",
-      data: resData,
+      data: userData,
     });
   } catch (err) {
     return Promise.reject({
-      type: "UNAUTHORIZED",
+      type: AUTH_STATUS.UNAUTHORIZED,
       message: err.message,
     });
   }
