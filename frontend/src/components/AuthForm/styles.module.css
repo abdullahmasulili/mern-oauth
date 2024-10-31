@@ -1,0 +1,14 @@
+.card {
+  width: 480px;
+}
+
+.content {
+  display: grid;
+  gap: 1rem;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
