@@ -29,6 +29,10 @@ module.exports = {
       sign_up_timestamp: {
         type: Sequelize.DATE,
       },
+      role: {
+        type: Sequelize.STRING,
+        defaultValue: "user",
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
