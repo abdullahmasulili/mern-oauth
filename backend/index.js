@@ -1,10 +1,13 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 3000;
 
 const { checkDatabaseConnection } = require("./config/database.js");
 const authRoute = require("./routes/auth.js");
 
+app.use(cors());
+app.use(express.json());
 app.use("/api", authRoute);
 
 app.get("/", (req, res) => {
