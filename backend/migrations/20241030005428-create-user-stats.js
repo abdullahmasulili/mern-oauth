@@ -19,6 +19,10 @@ module.exports = {
       login_count: {
         type: Sequelize.INTEGER,
       },
+      last_login_date: {
+        type: Sequelize.DATE,
+        defaultValue: null,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

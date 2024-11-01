@@ -22,9 +22,9 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
       },
-      email_is_verified: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      sign_up_provider: {
+        type: Sequelize.STRING,
+        defaultValue: null,
       },
       sign_up_timestamp: {
         type: Sequelize.DATE,
