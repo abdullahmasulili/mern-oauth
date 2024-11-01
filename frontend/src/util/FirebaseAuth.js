@@ -49,7 +49,13 @@ async function handleRegisterWithEmailAndPassword(
       password
     );
     const firebaseToken = await userCredential.user.getIdToken();
-    const userData = await handleAuth({ firebaseToken, firstName, lastName });
+
+    const userData = await handleAuth({
+      firebaseToken,
+      firstName,
+      lastName,
+      provider: "email",
+    });
 
     userData.accessToken = firebaseToken;
 
@@ -72,7 +78,7 @@ async function handleGoogleSignUp() {
   try {
     const userCredential = await signInWithPopup(auth, provider);
     const firebaseToken = await userCredential.user.getIdToken();
-    const userData = await handleAuth({ firebaseToken });
+    const userData = await handleAuth({ firebaseToken, provider: "google" });
 
     userData.accessToken = firebaseToken;
 
@@ -95,7 +101,7 @@ async function handleFacebookSignUp() {
   try {
     const userCredential = await signInWithPopup(auth, provider);
     const firebaseToken = await userCredential.user.getIdToken();
-    const userData = await handleAuth({ firebaseToken });
+    const userData = await handleAuth({ firebaseToken, provider: "facebook" });
 
     userData.accessToken = firebaseToken;
 
