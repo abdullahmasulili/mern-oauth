@@ -23,11 +23,7 @@ async function handleLoginWithEmailAndPassword(email, password) {
   userData.accessToken = firebaseToken;
 
   try {
-    return Promise.resolve({
-      type: AUTH_STATUS.AUTHORIZED,
-      message: "Login Succeed",
-      data: userData,
-    });
+    return Promise.resolve(userData);
   } catch (err) {
     return Promise.reject({
       type: AUTH_STATUS.UNAUTHORIZED,
@@ -59,11 +55,7 @@ async function handleRegisterWithEmailAndPassword(
 
     userData.accessToken = firebaseToken;
 
-    return Promise.resolve({
-      type: AUTH_STATUS.AUTHORIZED,
-      message: "Register Succeed",
-      data: userData,
-    });
+    return Promise.resolve(userData);
   } catch (err) {
     return Promise.reject({
       type: AUTH_STATUS.UNAUTHORIZED,
@@ -82,11 +74,7 @@ async function handleGoogleSignUp() {
 
     userData.accessToken = firebaseToken;
 
-    return Promise.resolve({
-      type: AUTH_STATUS.AUTHORIZED,
-      message: "Register with google succeed",
-      data: userData,
-    });
+    return Promise.resolve(userData);
   } catch (err) {
     return Promise.reject({
       type: AUTH_STATUS.UNAUTHORIZED,
@@ -105,11 +93,7 @@ async function handleFacebookSignUp() {
 
     userData.accessToken = firebaseToken;
 
-    return Promise.resolve({
-      type: AUTH_STATUS.AUTHORIZED,
-      message: "Register with facebook succeed",
-      data: userData,
-    });
+    return Promise.resolve(userData);
   } catch (err) {
     return Promise.reject({
       type: AUTH_STATUS.UNAUTHORIZED,
