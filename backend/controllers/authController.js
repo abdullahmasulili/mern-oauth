@@ -1,14 +1,17 @@
 const admin = require("../config/firebase");
-const User = require("../models/user");
-const UserStats = require("../models/user-stats");
+const { Sequelize, sequelize } = require("../models/index");
 
-async function authenticateUser(req, res) {
-  const payload = req.body;
+const User = require("../models/user")(sequelize, Sequelize.DataTypes);
+const UserStats = require("../models/user-stats")(
+  sequelize,
+  Sequelize.DataTypes
+);
 
+const authenticateUser = async (req, res, next) => {
   try {
     const decodedToken = await admin
       .auth()
-      .verifyIdToken(payload.firebaseToken);
+      .verifyIdToken(req.body.firebaseToken);
     const { uid, email } = decodedToken;
 
     let user = await User.findOne({ where: { firebase_uid: uid } });
@@ -16,11 +19,11 @@ async function authenticateUser(req, res) {
     if (!user) {
       const newUser = {
         firebase_uid: uid,
-        first_name: payload.firstName,
-        last_name: payload.lastName,
+        first_name: req.body.firstName,
+        last_name: req.body.lastName,
         email,
         sign_up_timestamp: new Date(),
-        sign_up_provider: payload.provider,
+        sign_up_provider: req.body.provider,
       };
 
       user = await User.create(newUser);
@@ -30,6 +33,7 @@ async function authenticateUser(req, res) {
     }
 
     await UserStats.create({
+      user_id: user.id,
       login_count: 0,
       last_login_date: null,
     });
@@ -39,11 +43,8 @@ async function authenticateUser(req, res) {
       data: user,
     });
   } catch (err) {
-    console.error(err);
-    res.status(401).json({
-      error: "Unauthorized",
-    });
+    next(err);
   }
-}
+};
 
-module.exports = authenticateUser;
+module.exports = { authenticateUser };
