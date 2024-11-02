@@ -36,29 +36,21 @@ async function handleUserLogout(userId) {
 }
 
 async function handleSendVerificationEmail(email, token) {
-  try {
-    const response = await fetch(
-      "http://localhost:3000/api/auth/verify-email",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({ email }),
-      }
-    );
+  const response = await fetch("http://localhost:3000/api/auth/verify-email", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify({ email }),
+  });
 
-    if (!response.ok) {
-      throw new Error({ message: "Failed to send verification link" });
-    }
+  if (response.status === 401) {
+    return await response.json();
+  }
 
-    const resData = await response.json();
-
-    return resData;
-  } catch (err) {
-    console.error(err);
-    return err;
+  if (!response.ok) {
+    throw Response({ message: "An error occured." }, { status: 500 });
   }
 }
 
