@@ -20,6 +20,21 @@ async function handleAuth(payload) {
   }
 }
 
+async function handleUserLogout(userId) {
+  try {
+    await fetch("http://localhost:3000/api/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 async function fetchUsers() {
   try {
     const response = await fetch("http://localhost:3000/api/users");
@@ -52,4 +67,4 @@ async function fetchUsersByUID(uid) {
   }
 }
 
-export { handleAuth, fetchUsers, fetchUsersByUID };
+export { handleAuth, fetchUsers, fetchUsersByUID, handleUserLogout };
