@@ -32,7 +32,11 @@ const initialValues = {
 };
 
 export default function RegisterForm({ onSwitchLogin, validationSchema }) {
-  const [cookie, setCookie] = useCookies(["accessToken", "uid"]);
+  const [cookie, setCookie] = useCookies([
+    "accessToken",
+    "uid",
+    "emailVerified",
+  ]);
   const navigate = useNavigate();
   const { setAccessToken, setCurrentUser } = useUser();
 
@@ -49,6 +53,7 @@ export default function RegisterForm({ onSwitchLogin, validationSchema }) {
 
       setCookie("accessToken", accessToken);
       setCookie("uid", userData.firebase_uid);
+      setCookie("emailVerified", userData.email_verified);
       setAccessToken(accessToken);
       setCurrentUser(userData);
 

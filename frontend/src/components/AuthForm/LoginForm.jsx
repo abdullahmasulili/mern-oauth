@@ -27,7 +27,11 @@ const initialValues = {
 
 export default function AuthForm({ onSwitchRegister, validationSchema }) {
   // eslint-disable-next-line no-unused-vars
-  const [cookie, setCookie] = useCookies(["accessToken", "uid"]);
+  const [cookie, setCookie] = useCookies([
+    "accessToken",
+    "uid",
+    "emailVerified",
+  ]);
   const navigate = useNavigate();
   const { setAccessToken, setCurrentUser } = useUser();
 
@@ -39,6 +43,7 @@ export default function AuthForm({ onSwitchRegister, validationSchema }) {
 
       setCookie("accessToken", accessToken);
       setCookie("uid", userData.firebase_uid);
+      setCookie("emailVerified", userData.email_verified);
       setAccessToken(accessToken);
       setCurrentUser(userData);
 

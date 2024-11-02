@@ -28,8 +28,13 @@ import LoadingModal from "./LoadingModal";
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["accessToken", "uid"]);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "accessToken",
+    "uid",
+    "emailVerified",
+  ]);
   const { currentUser, setAccessToken, setCurrentUser } = useUser();
+
   const displayName = [currentUser.first_name, currentUser.last_name].join(" ");
   const [loading, setLoading] = useState(false);
 
@@ -42,8 +47,7 @@ export default function Sidebar() {
 
     try {
       await handleUserLogout(currentUser.id);
-      removeCookie("accessToken");
-      removeCookie("uid");
+      clearCookies();
       setAccessToken(null);
       setCurrentUser({});
       handleLogout();
@@ -53,6 +57,12 @@ export default function Sidebar() {
       console.error(err);
       setLoading(false);
     }
+  }
+
+  function clearCookies() {
+    removeCookie("accessToken");
+    removeCookie("uid");
+    removeCookie("emailVerified");
   }
 
   return (
