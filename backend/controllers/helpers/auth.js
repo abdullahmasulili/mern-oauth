@@ -99,9 +99,21 @@ const handleSendEmailVerificationLink = async (admin, email) => {
   }
 };
 
+const handleVerifyToken = async (admin, token) => {
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+
+    return decodedToken;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+};
+
 module.exports = {
   handleUserRegister,
   handleUserLogin,
   handleUserLogout,
   handleSendEmailVerificationLink,
+  handleVerifyToken,
 };
