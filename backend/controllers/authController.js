@@ -2,10 +2,8 @@ const admin = require("../config/firebase");
 const { Sequelize, sequelize } = require("../models/index");
 
 const User = require("../models/user")(sequelize, Sequelize.DataTypes);
-const UserStats = require("../models/user-stats")(
-  sequelize,
-  Sequelize.DataTypes
-);
+
+const { handleRegisterUser, handleUserLogin } = require("./helpers/user");
 
 const authenticateUser = async (req, res, next) => {
   try {
@@ -26,17 +24,10 @@ const authenticateUser = async (req, res, next) => {
         sign_up_provider: req.body.provider,
       };
 
-      user = await User.create(newUser);
-      await admin.auth().updateUser(uid, {
-        displayName: [user.first_name, user.last_name].join(" "),
-      });
+      user = await handleRegisterUser(admin, newUser);
+    } else {
+      await handleUserLogin(user);
     }
-
-    await UserStats.create({
-      user_id: user.id,
-      login_count: 0,
-      last_login_date: null,
-    });
 
     res.status(201).json({
       message: "Authentication succeed",
