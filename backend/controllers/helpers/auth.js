@@ -1,3 +1,5 @@
+require("dotenv").config();
+const nodemailer = require("nodemailer");
 const { Sequelize, sequelize } = require("../../models/index");
 
 const User = require("../../models/user")(sequelize, Sequelize.DataTypes);
@@ -63,4 +65,43 @@ const handleUserLogout = async (userId) => {
   );
 };
 
-module.exports = { handleUserRegister, handleUserLogin, handleUserLogout };
+const handleSendEmailVerificationLink = async (admin, email) => {
+  try {
+    const verificationLink = admin.auth().generateEmailVerificationLink(email);
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Verify your email for our app",
+      text: `Click the link to verify your email: ${verificationLink}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return Promise.resolve({
+      isSent: true,
+      message: "Email verification link has sent",
+    });
+  } catch (err) {
+    console.error(err);
+    return Promise.reject({
+      ...err,
+      isSent: false,
+    });
+  }
+};
+
+module.exports = {
+  handleUserRegister,
+  handleUserLogin,
+  handleUserLogout,
+  handleSendEmailVerificationLink,
+};
