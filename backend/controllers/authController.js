@@ -7,6 +7,7 @@ const {
   handleUserRegister,
   handleUserLogin,
   handleUserLogout,
+  handleSendEmailVerificationLink,
 } = require("./helpers/auth");
 
 const authenticateUser = async (req, res, next) => {
@@ -51,4 +52,17 @@ const logoutUser = async (req, res, next) => {
   }
 };
 
-module.exports = { authenticateUser, logoutUser };
+const verifyEmail = async (req, res, next) => {
+  try {
+    const result = await handleSendEmailVerificationLink(admin, req.body.email);
+
+    res.status(200).json({
+      ...result,
+      message: `Verification link has sent to ${req.body.email}`,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { authenticateUser, logoutUser, verifyEmail };
