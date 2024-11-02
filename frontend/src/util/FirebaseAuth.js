@@ -102,8 +102,12 @@ async function handleFacebookSignUp() {
   }
 }
 
-async function handleLogout() {
-  return await signOut(auth);
+function handleLogout() {
+  try {
+    return signOut(auth);
+  } catch (err) {
+    return err;
+  }
 }
 
 export {
