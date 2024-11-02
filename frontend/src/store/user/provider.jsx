@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
+import { useReducer } from "react";
 import { UserContext } from "./context";
 import { ACTION_TYPE, userReducer } from "./reducer";
 
 export default function UserContextProvider({ children }) {
-  const [userState, userDispatch] = userReducer(userReducer, {
+  const [userState, userDispatch] = useReducer(userReducer, {
     currentUser: {},
     accessToken: null,
   });
