@@ -1,7 +1,7 @@
 const admin = require("../config/firebase");
 const { handleVerifyToken } = require("../controllers/helpers/auth");
 
-const authMiddleware = async (req, res, next) => {
+const authenticateToken = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
   if (!token) {
@@ -16,4 +16,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+module.exports = authenticateToken;
