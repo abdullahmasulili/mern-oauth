@@ -57,7 +57,7 @@ const handleUserLogout = async (userId) => {
     {
       where: {
         user_id: userId,
-        last_login_date: stats.login_timestamp,
+        login_timestamp: stats.last_login_date,
       },
     }
   );
