@@ -5,10 +5,13 @@ const port = 3000;
 
 const { checkDatabaseConnection } = require("./config/database.js");
 const authRoute = require("./routes/auth.js");
+const usersRoute = require("./routes/users.js");
 
 app.use(cors());
 app.use(express.json());
+
 app.use("/api", authRoute);
+app.use("/api/users", usersRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
