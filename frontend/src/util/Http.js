@@ -35,6 +35,33 @@ async function handleUserLogout(userId) {
   }
 }
 
+async function handleSendVerificationEmail(email, token) {
+  try {
+    const response = await fetch(
+      "http://localhost:3000/api/auth/verify-email",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({ email }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error({ message: "Failed to send verification link" });
+    }
+
+    const resData = await response.json();
+
+    return resData;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 async function fetchUsers() {
   try {
     const response = await fetch("http://localhost:3000/api/users");
@@ -67,4 +94,10 @@ async function fetchUsersByUID(uid) {
   }
 }
 
-export { handleAuth, fetchUsers, fetchUsersByUID, handleUserLogout };
+export {
+  handleAuth,
+  fetchUsers,
+  fetchUsersByUID,
+  handleUserLogout,
+  handleSendVerificationEmail,
+};
