@@ -3,7 +3,11 @@ const { Sequelize, sequelize } = require("../models/index");
 
 const User = require("../models/user")(sequelize, Sequelize.DataTypes);
 
-const { handleRegisterUser, handleUserLogin } = require("./helpers/user");
+const {
+  handleRegisterUser,
+  handleUserLogin,
+  handleUserLogout,
+} = require("./helpers/auth");
 
 const authenticateUser = async (req, res, next) => {
   try {
@@ -38,4 +42,13 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { authenticateUser };
+const logoutUser = async (req, res, next) => {
+  try {
+    await handleUserLogout(req.body.userId);
+    res.status(200);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { authenticateUser, logoutUser };
