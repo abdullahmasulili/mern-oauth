@@ -67,10 +67,14 @@ const handleUserLogout = async (userId) => {
 
 const handleSendEmailVerificationLink = async (admin, email) => {
   try {
-    const verificationLink = admin.auth().generateEmailVerificationLink(email);
+    const verificationLink = await admin
+      .auth()
+      .generateEmailVerificationLink(email);
 
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -103,10 +107,10 @@ const handleVerifyToken = async (admin, token) => {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
 
-    return decodedToken;
+    return Promise.resolve({ ...decodedToken });
   } catch (err) {
     console.error(err);
-    return err;
+    return Promise.reject(err);
   }
 };
 

@@ -9,10 +9,11 @@ const authenticateToken = async (req, res, next) => {
   }
 
   try {
-    await handleVerifyToken(admin, token);
+    const decodedToken = await handleVerifyToken(admin, token);
     next();
   } catch (err) {
-    return res.status(401).json({ message: "Invalid Token" });
+    console.log(err);
+    return res.status(401).json({ error: err });
   }
 };
 

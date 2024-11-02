@@ -9,6 +9,7 @@ const checkEmailMiddleware = async (req, res, next) => {
     const userData = await User.findOne({
       where: { firebase_uid: req.params.uid },
     });
+
     const { emailVerified } = firebaseUserData;
     const { email_verified } = userData;
 

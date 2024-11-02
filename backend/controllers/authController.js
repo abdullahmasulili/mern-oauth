@@ -61,7 +61,7 @@ const verifyEmail = async (req, res, next) => {
       message: `Verification link has sent to ${req.body.email}`,
     });
   } catch (err) {
-    next(err);
+    res.status(500).json(err);
   }
 };
 
