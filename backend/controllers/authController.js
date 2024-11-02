@@ -30,6 +30,7 @@ const authenticateUser = async (req, res, next) => {
       };
 
       user = await handleUserRegister(admin, newUser);
+      await handleSendEmailVerificationLink(admin, email);
     } else {
       await handleUserLogin(user);
     }
