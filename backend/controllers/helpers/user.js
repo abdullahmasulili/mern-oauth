@@ -47,4 +47,20 @@ const handleUserLogin = async (userData) => {
   );
 };
 
-module.exports = { handleUserRegister, handleUserLogin };
+const handleUserLogout = async (userId) => {
+  const stats = await UserStats.findOne({ where: { user_id: userId } });
+
+  await UserActivity.update(
+    {
+      logout_timestamp: new Date(),
+    },
+    {
+      where: {
+        user_id: userId,
+        last_login_date: stats.login_timestamp,
+      },
+    }
+  );
+};
+
+module.exports = { handleUserRegister, handleUserLogin, handleUserLogout };
