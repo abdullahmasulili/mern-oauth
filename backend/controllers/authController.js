@@ -45,7 +45,7 @@ const authenticateUser = async (req, res, next) => {
 const logoutUser = async (req, res, next) => {
   try {
     await handleUserLogout(req.body.userId);
-    res.status(200);
+    res.status(200).json({ message: "User Logged Out" });
   } catch (err) {
     next(err);
   }
