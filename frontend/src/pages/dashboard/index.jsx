@@ -1,15 +1,19 @@
 import { useCallback, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { Button, Card, CardActions, CardHeader } from "@mui/material";
 
 import { useUser } from "../../hooks";
 import { fetchUsersByUID } from "../../util/Http";
+
+import classes from "./styles.module.css";
 
 import Sidebar from "../../components/UI/Sidebar";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useUser();
+  const { email_verified: emailVerified } = currentUser;
 
   // eslint-disable-next-line no-unused-vars
   const [cookies, setCookie] = useCookies(["accessToken", "uid"]);
@@ -36,14 +40,25 @@ export default function Dashboard() {
     if (!Object.hasOwn(currentUser, "email")) {
       resolveCurrentUser();
     }
-  }, [currentUser, resolveCurrentUser]);
+  }, [currentUser, resolveCurrentUser, uid]);
 
   return (
     <>
-      <Sidebar />
-      <main>
-        <Outlet />
-      </main>
+      {emailVerified && <Sidebar />}
+      {!emailVerified ? (
+        <main className={classes.container}>
+          <Card>
+            <CardHeader title="Please verify your email" />
+            <CardActions>
+              <Button>Resend Verification Link</Button>
+            </CardActions>
+          </Card>
+        </main>
+      ) : (
+        <main>
+          <Outlet />
+        </main>
+      )}
     </>
   );
 }
