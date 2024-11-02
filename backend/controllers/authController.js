@@ -4,7 +4,7 @@ const { Sequelize, sequelize } = require("../models/index");
 const User = require("../models/user")(sequelize, Sequelize.DataTypes);
 
 const {
-  handleRegisterUser,
+  handleUserRegister,
   handleUserLogin,
   handleUserLogout,
 } = require("./helpers/auth");
@@ -28,7 +28,7 @@ const authenticateUser = async (req, res, next) => {
         sign_up_provider: req.body.provider,
       };
 
-      user = await handleRegisterUser(admin, newUser);
+      user = await handleUserRegister(admin, newUser);
     } else {
       await handleUserLogin(user);
     }
