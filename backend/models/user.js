@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       first_name: DataTypes.STRING,
       last_name: DataTypes.STRING,
       email: DataTypes.STRING,
+      email_verified: DataTypes.BOOLEAN,
       sign_up_provider: DataTypes.STRING,
       sign_up_timestamp: DataTypes.DATE,
       role: DataTypes.STRING,
