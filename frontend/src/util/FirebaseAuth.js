@@ -110,10 +110,27 @@ function handleLogout() {
   }
 }
 
+async function handleRefreshToken() {
+  const user = auth.currentUser;
+
+  if (user) {
+    try {
+      const newToken = await user.getIdToken(true);
+
+      return newToken;
+    } catch (err) {
+      console.error(err);
+    }
+  } else {
+    console.log("No active user");
+  }
+}
+
 export {
   handleLoginWithEmailAndPassword,
   handleRegisterWithEmailAndPassword,
   handleGoogleSignUp,
   handleFacebookSignUp,
   handleLogout,
+  handleRefreshToken,
 };
