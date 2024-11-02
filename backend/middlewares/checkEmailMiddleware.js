@@ -14,9 +14,16 @@ const checkEmailMiddleware = async (req, res, next) => {
     const { email_verified } = userData;
 
     if (emailVerified && !email_verified) {
-      await User.update({
-        email_verified: true,
-      });
+      await User.update(
+        {
+          email_verified: true,
+        },
+        {
+          where: {
+            firebase_uid: req.params.uid,
+          },
+        }
+      );
     }
 
     next();
